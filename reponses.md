@@ -25,7 +25,7 @@ Quelle est l’occupation de Clifford Johnathan ? *Ecrivez une requêtes dont l
 ```
 db.users.find(
     {name: 'Clifford Johnathan' },
-    { name: 1, occupation: 1 }
+    {name: 1, occupation: 1 }
     )
 ```
 
@@ -41,7 +41,7 @@ db.users.find({ age: {$gte: 18, $lte: 30}}).count()
 
 (optionnelle) Combien d’utilisateurs sont artistes (artist) ou scientifiques (scientist) ?
 ```
-
+db.users.count({occupation: {$in: ["artist", "scientist"]}})
 ```
 
 ### Question 6
