@@ -58,3 +58,18 @@ Quelles sont toutes les occupations présentes dans la base de données ?
 ```
 db.users.find({},{_id: 0, occupation: 1})
 ```
+
+
+
+### Question 16
+Modifier la collection movies en ajoutant à chaque film un champ year contenant l’année et en supprimant cette information du titre.
+Ne nombreuses méthodes peuvent répondre à ce besoin ; privilégier au maximum les approches exploitant les fonctionnalités de MongoDB
+(il est par exemple déconseillé, pour des raisons évidentes de performances, de demander l’intégralité des films à la base de données,
+de les stocker dans une liste javascript, puis d’itérer sur cette liste pour calculer les nouvelles valeurs de champs et mettre à jour les éléments, toujours en javascript).
+
+```
+db.movies.find().limit(10).forEach( function(myDoc) {
+ let dataYear = /\((\d*)\)/.exec(myDoc.title);
+ db.movies.update({"title": myDoc.title}, {$set: { year: dataYear[1] }});
+ db.movies.update({"title": myDoc.title},{title: {$split: [myDoc.title, dataYear] } } ) } );
+```
