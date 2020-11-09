@@ -56,7 +56,7 @@ db.users.find({occupation: "writer", gender: "F"},{"name": 1,"gender": 1, "age" 
 Quelles sont toutes les occupations présentes dans la base de données ?
 
 ```
-db.users.find({},{_id: 0, occupation: 1})
+db.users.distinct('occupation')
 ```
 
 
