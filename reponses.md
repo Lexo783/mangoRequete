@@ -23,7 +23,10 @@ db.movies.count()
 Quelle est l’occupation de Clifford Johnathan ? *Ecrivez une requêtes dont la réponse affiche uniquement son nom et son occupation.*
 
 ```
-db.users.find({ name: 'Clifford Johnathan' }, { name: 1, occupation: 1 })
+db.users.find(
+    {name: 'Clifford Johnathan' },
+    { name: 1, occupation: 1 }
+    )
 ```
 
 ### Question 4
@@ -45,7 +48,7 @@ db.users.find({ age: {$gte: 18, $lte: 30}}).count()
 
 Quelles sont les dix femmes auteurs (writer) les plus âgées ?
 ```
-
+db.users.find({occupation: "writer", gender: "F"},{"name": 1,"gender": 1, "age" : 1}).sort({ age : -1}).limit(10)
 ```
 
 ### Question 7
@@ -53,5 +56,5 @@ Quelles sont les dix femmes auteurs (writer) les plus âgées ?
 Quelles sont toutes les occupations présentes dans la base de données ?
 
 ```
-
+db.users.find({},{_id: 0, occupation: 1})
 ```
