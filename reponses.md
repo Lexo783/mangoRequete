@@ -204,5 +204,23 @@ db.users.aggregate([
 ### Question 25
 Quels sont les trois derniers films notés par Jayson Brad ?
 ```
+db.users.aggregate([
+    {$match: {name: 'Jayson Brad'}},
+    {$unwind: "$movies"},
+    {$sort: {'movies.date': -1}},
+    {$limit: 3},
+]).pretty()
+```
 
+
+### Qestion 28
+
+```
+db.users.update({name:"Barry Erin"},[{$set:{movieid: 14, rating: 4, timestamp: "1604929046"}}])
+```
+
+### Qestion 29
+
+```
+db.users.update({movies: {movieid: 1311}},[{$set:{movieid: , rating: , timestamp: ""}}])
 ```

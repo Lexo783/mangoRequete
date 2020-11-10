@@ -1,14 +1,17 @@
-let c = 0;
-let deuxMilleUn = (new Date('2001-01-01'))
-db.users.find().forEach((user) => {
-    user.movies.forEach((mov) => {
-        if(mov.date > deuxMilleUn){
-            ++c
-        }
-    })
-})
+db.users.aggregate([
+    {$match: {name: 'Jayson Brad'}},
+    {$unwind: "$movies"},
+    {$sort: {'movies.date': -1}},
+    {$limit: 3},
+]).pretty()
+
 db.users.aggregate([
     {$unwind: "$movies"},
-    {$match: {'movies.date': {$gte: deuxMilleUn}}},
-    {$count: 'totalCount'}
-])
+    {$sort: {"user.gender": "F"}},
+]).pretty()
+
+db.users.find({'gender': "F"}).forEach((feme) => {
+    feme.movies.forEach((movie) => {
+        print(movie);
+    })
+})
