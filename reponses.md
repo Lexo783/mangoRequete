@@ -93,6 +93,14 @@ db.movies.find().forEach((myDoc)=>{
    db.movies.updateOne(myDoc,{$set:{year: parseInt(myDoc.title.split('(').pop().split(')')[0]),title: myDoc.title.split('(')[0].slice(0,-1)}})
    })
 ```
+ou
+```
+db.movies.find().forEach((myDoc)=>{
+    myDoc.year = parseInt(myDoc.title.substr(-5,4));
+    myDoc.title = myDoc.title.substr(0,myDoc.title.length -7);
+    db.movies.save(myDoc);
+})
+```
 
 ### Question 17
 
@@ -117,10 +125,84 @@ db.users.find().forEach((myDoc) => {
     db.users.updateOne(myDoc, {$set: {movies: newMovies}})
 })
 ```
+ou 
+```
+db.users.find().forEach((user) => {
+       user.movies.forEach(rating => {
+           rating.date = new Date(rating.timestamp*1000);
+       })
+       db.users.save(user);
+   })
+```
+ou
+```
+db.users.updateMany({},{$mul: {'movies.$[].timestamp': 1000}})
+```
 
 ### Question 19
-
 Combien d’utilisateurs ont noté le film qui a pour id 1196 (Star Wars: Episode V - The Empire Strikes Back (1980)) ?
+```
+db.users.find({'movies.movieId' : 1196}).count()
+```
+
+### Question 20
+
+Combien d’utilisateurs ont noté tous les films de la première trilogie Star Wars (id 260, 1196, 1210) ?
+```
+db.users.find({'movies.movieId' : {$all: [260, 1196, 1210] }}).count()
+```
+
+### Question 21
+Combien d’utilisateurs ont notés exactement 48 films ?
+```
+db.users.find({'movies' : {$size: 48 }}).count()
+```
+
+### Question 22
+Pour chaque utilisateur, créer un champ num_ratings qui indique le nombre de films qu’il a notés.
+```
+db.users.find().forEach((myDoc)=>{
+db.users.updateOne(myDoc,{$set:{num_rating:myDoc.movies.length}})
+})
+```
+ou
+```
+db.users.aggregate([
+    {"$addFields": {"num_ratings": {$size: "$movies"}}},
+    {$out: "users"}
+])
+```
+
+### Question 23
+Combien d’utilisateurs ont noté plus de 90 films ?
+```
+db.users.find({num_ratings: {$gte:90}}).count()
+```
+
+### Question 24
+Question 24. (optionnelle) Combien de notes ont été soumises après le 1er janvier 2001 ?
+```
+let c = 0;
+let deuxMilleUn = (new Date('2001-01-01'))
+db.users.find().forEach((user) => {
+    user.movies.forEach((mov) => {
+        if(mov.date > deuxMilleUn){
+            ++c
+        }
+    })
+})
+```
+ou
+```
+db.users.aggregate([
+    {$unwind: "$movies"},
+    {$match: {'movies.date': {$gte: deuxMilleUn}}},
+    {$count: 'totalCount'}
+])
+```
+
+### Question 25
+Quels sont les trois derniers films notés par Jayson Brad ?
 ```
 
 ```
