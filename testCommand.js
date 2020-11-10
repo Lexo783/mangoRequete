@@ -1,0 +1,31 @@
+db.movies.find({genres: {$regex: /horror/i}})
+
+{
+    "_id":6038,
+    "name":"Yaeko Hassan",
+    "gender": "F",
+    "age":95,
+    "occupation": "academic/educator",
+    "movies":[
+        {"movieid": 1419, "rating": 4, "timestamp": 956714815},
+        {"movieid": 920, "rating": 3, "timestamp": 956706827},
+        {"movieid": 3088, "rating": 5, "timestamp": 956707640},
+        {"movieid": 232, "rating": 4, "timestamp": 956707640},
+        {"movieid": 1136, "rating": 4, "timestamp": 956707708},
+        {"movieid": 1148, "rating": 5, "timestamp": 956707604},
+        {"movieid": 1183, "rating": 5, "timestamp": 956717204},
+        {"movieid": 2146, "rating": 4, "timestamp": 956706909},
+        {"movieid": 3548, "rating": 4, "timestamp": 956707604},
+        {"movieid": 356, "rating": 4, "timestamp": 956707005},
+        {"movieid": 1210, "rating": 4, "timestamp": 956706876},
+        {"movieid": 1223,"rating": 5, "timestamp": 956707734},
+        {"movieid": 1276, "rating": 3, "timestamp": 956707604},
+        {"movieid": 1296, "rating": 5, "timestamp": 956714684},
+        {"movieid": 1354, "rating": 3, "timestamp": 956714725},
+        {"movieid": 1387, "rating": 2, "timestamp": 956707005},
+        {"movieid": 2700, "rating": 1, "timestamp": 956715051},
+        {"movieid": 2716, "rating": 3, "timestamp": 956707604},
+        {"movieid": 3396, "rating": 3, "timestamp": 956706827},
+        {"movieid": 1079, "rating": 5, "timestamp": 956707547},
+        ],
+}
